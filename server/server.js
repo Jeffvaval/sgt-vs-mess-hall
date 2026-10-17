@@ -110,7 +110,8 @@ app.get("/api/square/locations", async function (req, res) {
     }
 });
 
-// Create a Square-hosted checkout for validated cart items.
+
+ // Create a Square-hosted checkout for validated cart items.
 app.post("/api/create-checkout", async function (req, res) {
     try {
         if (
@@ -135,6 +136,7 @@ app.post("/api/create-checkout", async function (req, res) {
         }
 
         const lineItems = [];
+        const requestedQuantities = {};
 
         for (const item of items) {
             if (
@@ -154,6 +156,22 @@ app.post("/api/create-checkout", async function (req, res) {
             if (!product) {
                 return res.status(400).json({
                     error: "A product is unavailable for checkout."
+                });
+            }
+
+            requestedQuantities[item.id] =
+                (requestedQuantities[item.id] || 0) + item.quantity;
+
+            if (
+                Number.isSafeInteger(product.stock) &&
+                requestedQuantities[item.id] > product.stock
+            ) {
+                return res.status(400).json({
+                    error:
+                        product.name +
+                        " has only " +
+                        product.stock +
+                        " available. Please update your cart."
                 });
             }
 
@@ -205,6 +223,7 @@ app.post("/api/create-checkout", async function (req, res) {
         });
     }
 });
+
 
 app.listen(PORT, "0.0.0.0", function () {
     console.log(
