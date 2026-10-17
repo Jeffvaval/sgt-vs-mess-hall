@@ -23,13 +23,24 @@ app.use(express.json({ limit: "10kb" }));
 app.use(express.static(path.join(__dirname, "..")));
 
 // Server-controlled catalog.
-
 const products = {
+
     "puddin-individual": {
         name: "Puddin' On Duty — Individual Cookie",
         price: 500,
         stock: 15
     },
+    "berry-individual": {
+        name: "Berry on Guard — Individual Cookie",
+        price: 500,
+        stock: 19
+    },
+    "sergeants-individual": {
+        name: "Sergeant's Stash — Individual Cookie",
+        price: 600,
+        stock: 16
+    },
+
     "mini-6-berry": {
         name: "6 Mini Cookies — Berry on Guard",
         price: 1300,
