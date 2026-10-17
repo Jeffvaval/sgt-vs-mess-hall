@@ -23,36 +23,50 @@ app.use(express.json({ limit: "10kb" }));
 app.use(express.static(path.join(__dirname, "..")));
 
 // Server-controlled catalog.
+
 const products = {
-    "puddin": {
-        name: "Puddin' On Duty",
-        price: 600
+    "puddin-individual": {
+        name: "Puddin' On Duty — Individual Cookie",
+        price: 500,
+        stock: 15
     },
-    "sergeants-stash": {
-        name: "Sergeant's Stash",
-        price: 700
+    "mini-6-berry": {
+        name: "6 Mini Cookies — Berry on Guard",
+        price: 1300,
+        stock: 1
     },
-    "lemon-drop-zone": {
-        name: "Lemon Drop Zone",
-        price: 500
+    "mini-6-sergeants": {
+        name: "6 Mini Cookies — Sergeant's Stash",
+        price: 1300,
+        stock: 1
     },
-    "campfire-rations": {
-        name: "Campfire Rations",
-        price: 500
+    "mini-6-campfire": {
+        name: "6 Mini Cookies — Campfire Rations",
+        price: 1300,
+        stock: 2
     },
-    "berry-on-guard": {
-        name: "Berry on Guard",
-        price: 500
+    "mini-4-variety": {
+        name: "4 Mini Cookies — Variety Pack",
+        price: 600,
+        stock: 28
     },
-    "mini-4": {
-        name: "4 Mini Cookie Pack",
-        price: 600
+    "mini-4-puddin": {
+        name: "4 Mini Cookies — Puddin' On Duty",
+        price: 600,
+        stock: 4
     },
-    "mini-12": {
-        name: "12 Mini Cookie Pack",
-        price: 1500
+    "mini-4-berry": {
+        name: "4 Mini Cookies — Berry on Guard",
+        price: 600,
+        stock: 2
+    },
+    "mini-4-sergeants": {
+        name: "4 Mini Cookies — Sergeant's Stash",
+        price: 600,
+        stock: 2
     }
 };
+
 
 app.get("/api/health", function (req, res) {
     res.json({

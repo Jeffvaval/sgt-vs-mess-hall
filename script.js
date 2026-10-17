@@ -17,136 +17,99 @@
 */
 
 
+
 const cookies = [
     {
-        id: "code-red",
-        name: "Code Red Velvet",
-        description:
-            "A rich red velvet cookie loaded with Oreo pieces, Hershey's Cookies 'n' Creme, and Ghirardelli chocolate. A chocolate-packed mission in every bite!",
-        price: 7.00,
-        emoji: "❤️",
-        image: "images/code-red-velvet.jpg",
-        available: false
-    },
-    {
-        id: "shortcake",
-        name: "Operation Shortcake",
-        description:
-            "A strawberry-infused sugar cookie with strawberry pieces and sweet white chocolate. A berry-sweet mission from the first bite to the last!",
-        price: 7.00,
-        emoji: "🍓",
-        image: "images/operation-shortcake.jpg",
-        available: false
-    },
-    {
-        id: "puddin",
-        name: "Puddin' On Duty",
-        description:
-            "A soft, thick banana pudding cookie with NILLA wafer pieces and creamy white chocolate chips. A sweet mission in every bite!",
-        price: 6.00,
+        id: "puddin-individual",
+        name: "Puddin' On Duty — Individual Cookie",
+        description: "One Puddin' On Duty cookie.",
+        price: 5.00,
+        stock: 15,
         emoji: "🍌",
         image: "images/puddin-on-duty.jpg",
         available: true
+    }
+];
+
+const cookieBoxes = [
+    {
+        id: "mini-6-berry",
+        name: "6 Mini Cookies — Berry on Guard",
+        quantity: 6,
+        description: "Six Berry on Guard mini cookies.",
+        price: 13.00,
+        stock: 1,
+        emoji: "🍓",
+        image: "images/berry-on-guard.jpg",
+        available: true
     },
     {
-        id: "sergeants-stash",
-        name: "Sergeant's Stash",
-        description:
-            "A thick, loaded chocolate chip cookie packed with semi-sweet and milk chocolate chips, crushed vanilla wafers, and a touch of flaky sea salt. Serious reinforcements for your sweet tooth!",
-        price: 7.00,
+        id: "mini-6-sergeants",
+        name: "6 Mini Cookies — Sergeant's Stash",
+        quantity: 6,
+        description: "Six Sergeant's Stash mini cookies.",
+        price: 13.00,
+        stock: 1,
         emoji: "🍪",
         image: "images/sergeants-stash.jpg",
         available: true
     },
     {
-        id: "battle-buddies",
-        name: "Battle Buddies",
-        description:
-            "Two cookies. One sweet mission. Choose any two cookies from Sgt. V's Mess Hall and create your perfect sweet duo!",
-        price: 12.00,
-        emoji: "💕",
-        image: "",
-        available: false
-    },
-    {
-        id: "lemon-drop-zone",
-        name: "Lemon Drop Zone",
-        description:
-            "A bright, buttery lemon cookie finished with a sweet white drizzle. A little citrus backup for your sweet tooth!",
-        price: 5.00,
-        emoji: "🍋",
-        image: "images/lemon-drop-zone.jpg",
+        id: "mini-6-campfire",
+        name: "6 Mini Cookies — Campfire Rations",
+        quantity: 6,
+        description: "Six Campfire Rations mini cookies.",
+        price: 13.00,
+        stock: 2,
+        emoji: "🔥",
+        image: "images/campfire-rations.jpg",
         available: true
     },
     {
-        id: "campfire-rations",
-name: "Campfire Rations",
-description:
-    "A golden, campfire-inspired cookie topped with marshmallow pieces. Sweet, cozy, and ready for snack duty!",
-price: 5.00,
-emoji: "🔥",
-image: "images/campfire-rations.jpg",
-available: true
-    },
-    {
-        id: "berry-on-guard",
-        name: "Berry on Guard",
-        description:
-            "A berry-inspired pink cookie finished with sweet white drizzle and strawberry-colored crumbles. Reporting for sweet duty!",
-        price: 5.00,
-        emoji: "🍓",
-        image: "images/berry-on-guard.jpg",
-        available: true
-    }
-];
-
-
-/*
-   PRESET  MINI COOKIE BOXES
-
-   These are preset assortments. Customers do not
-   select individual flavors for these boxes.
-*/
-
-
-
-
-const cookieBoxes = [
-    {
-        id: "mini-4",
-        name: "4 Mini Cookie Pack",
+        id: "mini-4-variety",
+        name: "4 Mini Cookies — Variety Pack",
         quantity: 4,
-        description:
-            "Four bite-sized cookies packed for a little sweet mission.",
+        description: "A variety pack of four mini cookies.",
         price: 6.00,
-        emoji: "🍪",
+        stock: 28,
+        emoji: "🎁",
         image: "images/4-mini-cookie-pack.jpg",
         available: true
     },
     {
-        id: "mini-6",
-        name: "6 Mini Cookie Pack",
-        quantity: 6,
-        description:
-            "Six bite-sized cookies. Coming soon!",
-        price: null,
-        emoji: "🎀",
-        image: "",
-        available: false
+        id: "mini-4-puddin",
+        name: "4 Mini Cookies — Puddin' On Duty",
+        quantity: 4,
+        description: "Four Puddin' On Duty mini cookies.",
+        price: 6.00,
+        stock: 4,
+        emoji: "🍌",
+        image: "images/puddin-on-duty.jpg",
+        available: true
     },
     {
-        id: "mini-12",
-        name: "12 Mini Cookie Pack",
-        quantity: 12,
-        description:
-            "Twelve mini cookies packed for sharing with your whole crew.",
-        price: 15.00,
-        emoji: "🎁",
-        image: "images/12-mini-cookie-pack.jpg",
+        id: "mini-4-berry",
+        name: "4 Mini Cookies — Berry on Guard",
+        quantity: 4,
+        description: "Four Berry on Guard mini cookies.",
+        price: 6.00,
+        stock: 2,
+        emoji: "🍓",
+        image: "images/berry-on-guard.jpg",
+        available: true
+    },
+    {
+        id: "mini-4-sergeants",
+        name: "4 Mini Cookies — Sergeant's Stash",
+        quantity: 4,
+        description: "Four Sergeant's Stash mini cookies.",
+        price: 6.00,
+        stock: 2,
+        emoji: "🍪",
+        image: "images/sergeants-stash.jpg",
         available: true
     }
 ];
-
 
 
 /*
@@ -286,6 +249,7 @@ function displayCookieBoxes() {
 
 /* Add a product to the cart. */
 
+
 function addToCart(productId) {
     const product = findProduct(productId);
 
@@ -301,6 +265,18 @@ function addToCart(productId) {
         item => item.id === productId
     );
 
+    const currentQuantity = existingItem
+        ? existingItem.quantity
+        : 0;
+
+    if (
+        product.stock !== undefined &&
+        currentQuantity >= product.stock
+    ) {
+        alert("Sorry, we don't have any more of this item in stock.");
+        return;
+    }
+
     if (existingItem) {
         existingItem.quantity++;
     } else {
@@ -315,6 +291,7 @@ function addToCart(productId) {
     const cartPanel = document.getElementById("cart-panel");
     cartPanel.hidden = false;
 }
+
 
 /* Change the quantity of an item in the cart. */
 
