@@ -26,7 +26,7 @@ const cookies = [
         price: 5.00,
         stock: 15,
         emoji: "🍌",
-        image: "images/puddin-on-duty.jpg",
+        image: "images/puddin-individual.jpg",
         available: true
     }
 ];
