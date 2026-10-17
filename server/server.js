@@ -9,8 +9,8 @@ require("dotenv").config({
 
 const { SquareClient, SquareEnvironment } = require("square");
 
-// Use Production only when SQUARE_ENVIRONMENT is set to "production".
-// Otherwise, default to Sandbox for safer local testing.
+// Use Production only when SQUARE_ENVIRONMENT is "production".
+// Otherwise, default to Sandbox.
 const squareEnvironment =
     process.env.SQUARE_ENVIRONMENT === "production"
         ? SquareEnvironment.Production
@@ -23,7 +23,6 @@ app.use(express.json({ limit: "10kb" }));
 app.use(express.static(path.join(__dirname, "..")));
 
 // Server-controlled catalog.
-// Only currently available products are included.
 const products = {
     "puddin": {
         name: "Puddin' On Duty",
@@ -89,6 +88,7 @@ app.get("/api/square/locations", async function (req, res) {
         });
     } catch (error) {
         console.error("Square location request failed.");
+        console.error("Error message:", error.message);
 
         res.status(502).json({
             error: "Unable to retrieve Square locations."
@@ -176,20 +176,21 @@ app.post("/api/create-checkout", async function (req, res) {
             checkoutUrl: result.paymentLink.url
         });
     } catch (error) {
-    console.error("Square checkout creation failed.");
-    console.error("Error message:", error.message);
+        console.error("Square checkout creation failed.");
+        console.error("Error message:", error.message);
 
-    if (error.errors) {
-        console.error(
-            "Square API errors:",
-            JSON.stringify(error.errors)
-        );
+        if (error.errors) {
+            console.error(
+                "Square API errors:",
+                JSON.stringify(error.errors)
+            );
+        }
+
+        res.status(502).json({
+            error: "Unable to create Square checkout. Please try again."
+        });
     }
-
-    res.status(502).json({
-        error: "Unable to create Square checkout. Please try again."
-    });
-}
+});
 
 app.listen(PORT, "0.0.0.0", function () {
     console.log(
