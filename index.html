@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sgt. V's Mess Hall | Where Every Bite Earns Its Stripes</title>
+
+    <meta name="description" content="Discover homemade, small-batch gourmet cookies from Sgt. V's Mess Hall. Fresh batches, sweet missions, and cookies made with love.">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="site-header">
+        <a href="#home" class="logo">
+            <span class="logo-icon">✿</span>
+            <span>SGT V'S<br>MESS HALL</span>
+        </a>
+
+        <nav class="navigation">
+            <a href="#home">Home</a>
+            <a href="#cookies">Cookies</a>
+            <a href="#boxes">Cookie Boxes</a>
+            <a href="#mission">Our Mission</a>
+            <button id="cart-button" class="cart-button">
+                Cart (<span id="cart-count">0</span>)
+            </button>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <p class="eyebrow">SMALL BATCHES. BIG FLAVOR.</p>
+
+            <h1>SGT V'S<br>MESS HALL</h1>
+
+            <p class="tagline">
+                Where Every Bite Earns Its Stripes.
+            </p>
+
+            <p class="hero-description">
+                Gourmet cookies with a sweet mission.
+                Made in small batches and packed with personality.
+            </p>
+
+            
+         <a href="https://cash.app/$sgtvsmesshall"
+           class="primary-button"
+            target="_blank"
+               rel="noopener noreferrer">
+                  ORDER COOKIES NOW
+          </a>
+
+
+            <p class="hero-note">
+                Fresh batches. Limited supply. Once gone, mission complete.
+            </p>
+        </section>
+
+        <!-- Cookie Catalog -->
+        <section id="cookies" class="section">
+            <div class="section-heading">
+                <p class="eyebrow">THE COOKIE LINEUP</p>
+                <h2>This Week's Supply Drop</h2>
+                <p>Choose your favorite treats from the mess hall.</p>
+            </div>
+
+            <div id="cookie-list" class="product-grid">
+                <!-- Products are added by JavaScript. -->
+            </div>
+        </section>
+
+        <!-- Cookie Boxes -->
+        <section id="boxes" class="section boxes-section">
+            <div class="section-heading">
+                <p class="eyebrow">CHOOSE YOUR RATIONS</p>
+                <h2>Build Your Sweet Supply</h2>
+                <p>Find the perfect cookie box for your next sweet mission.</p>
+            </div>
+
+            <div id="box-list" class="product-grid">
+                <!-- Cookie boxes are added by JavaScript. -->
+            </div>
+        </section>
+
+        <!-- Our Mission -->
+        <section id="mission" class="mission-section">
+            <div class="mission-content">
+                <p class="eyebrow">OUR STORY</p>
+                <h2>The Mess Hall Mission</h2>
+
+                <p>
+                    Sgt. V's Mess Hall is a small-batch home bakery where
+                    feminine charm meets a playful military twist.
+                    We craft oversized gourmet cookies with care,
+                    creativity, and plenty of personality.
+                </p>
+
+                <p>
+                    Every batch is made to bring a little sweetness
+                    to your day. Welcome to the mess hall!
+                </p>
+            </div>
+        </section>
+
+        <!-- Pickup and Delivery -->
+        <section class="section logistics-section">
+            <div class="logistics-card">
+                <p class="eyebrow">MISSION STATUS: PICKUP</p>
+                <h2>Pickup Logistics</h2>
+
+                <p>
+                    Pickup is available Monday–Tuesday and Thursday–Friday,
+                    from 9:30 AM to 5:00 PM.
+                </p>
+
+                <p>
+                    Same-day orders must be placed by 4:00 PM,
+                    subject to availability. Customers will receive
+                    a notification when their order is ready.
+                </p>
+            </div>
+
+            <div class="logistics-card">
+                <p class="eyebrow">MISSION STATUS: DELIVERY</p>
+                <h2>Delivery Manifest</h2>
+
+                <p>
+                    Local delivery is available within a 20-mile radius,
+                    with a $20 minimum food order.
+                </p>
+
+                <p>
+                    Delivery fees depend on distance. Orders outside
+                    the delivery zone are pickup-only. All deliveries
+                    depend on availability and scheduled delivery times.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Shopping Cart -->
+    <div id="cart-panel" class="cart-panel" hidden>
+        <div class="cart-header">
+            <h2>Your Sweet Supply</h2>
+            <button id="close-cart" class="close-button"
+                    aria-label="Close shopping cart">✕</button>
+        </div>
+
+        <div id="cart-items">
+            <p>Your cart is waiting for its first cookie!</p>
+        </div>
+
+        <p class="cart-total">
+            Total: <strong id="cart-total">$0.00</strong>
+        </p>
+
+        
+<p class="cart-note">
+    Secure checkout and payment powered by Square.
+</p>
+
+<button id="checkout-button" class="primary-button" type="button">
+    Checkout with Square
+</button>
+
+<p id="checkout-message" class="cart-note" role="status"></p>
+
+<button id="clear-cart" class="secondary-button" type="button">
+    Clear Cart
+</button>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <h2>Sgt. V's Mess Hall</h2>
+        <p>Where Every Bite Earns Its Stripes.</p>
+        <p>Made with love. Served with a little sweetness. ♡</p>
+        <p class="copyright">
+            &copy; <span id="current-year"></span> Sgt. V's Mess Hall
+        </p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
