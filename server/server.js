@@ -176,13 +176,20 @@ app.post("/api/create-checkout", async function (req, res) {
             checkoutUrl: result.paymentLink.url
         });
     } catch (error) {
-        console.error("Square checkout creation failed.");
+    console.error("Square checkout creation failed.");
+    console.error("Error message:", error.message);
 
-        res.status(502).json({
-            error: "Unable to create Square checkout. Please try again."
-        });
+    if (error.errors) {
+        console.error(
+            "Square API errors:",
+            JSON.stringify(error.errors)
+        );
     }
-});
+
+    res.status(502).json({
+        error: "Unable to create Square checkout. Please try again."
+    });
+}
 
 app.listen(PORT, "0.0.0.0", function () {
     console.log(
