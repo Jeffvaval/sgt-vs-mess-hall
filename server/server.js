@@ -9,6 +9,13 @@ require("dotenv").config({
 
 const { SquareClient, SquareEnvironment } = require("square");
 
+// Use Production only when SQUARE_ENVIRONMENT is set to "production".
+// Otherwise, default to Sandbox for safer local testing.
+const squareEnvironment =
+    process.env.SQUARE_ENVIRONMENT === "production"
+        ? SquareEnvironment.Production
+        : SquareEnvironment.Sandbox;
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -55,11 +62,18 @@ app.get("/api/health", function (req, res) {
     });
 });
 
+// Retrieve locations from the selected Square environment.
 app.get("/api/square/locations", async function (req, res) {
     try {
+        if (!process.env.SQUARE_ACCESS_TOKEN) {
+            return res.status(500).json({
+                error: "Square access token is not configured."
+            });
+        }
+
         const square = new SquareClient({
             token: process.env.SQUARE_ACCESS_TOKEN,
-            environment: SquareEnvironment.Sandbox
+            environment: squareEnvironment
         });
 
         const result = await square.locations.list();
@@ -75,13 +89,14 @@ app.get("/api/square/locations", async function (req, res) {
         });
     } catch (error) {
         console.error("Square location request failed.");
+
         res.status(502).json({
-            error: "Unable to retrieve Sandbox locations."
+            error: "Unable to retrieve Square locations."
         });
     }
 });
 
-// Create a Square-hosted Sandbox checkout for validated cart items.
+// Create a Square-hosted checkout for validated cart items.
 app.post("/api/create-checkout", async function (req, res) {
     try {
         if (
@@ -95,7 +110,11 @@ app.post("/api/create-checkout", async function (req, res) {
 
         const items = req.body.items;
 
-        if (!Array.isArray(items) || items.length === 0 || items.length > 30) {
+        if (
+            !Array.isArray(items) ||
+            items.length === 0 ||
+            items.length > 30
+        ) {
             return res.status(400).json({
                 error: "Your cart must contain between 1 and 30 items."
             });
@@ -136,7 +155,7 @@ app.post("/api/create-checkout", async function (req, res) {
 
         const square = new SquareClient({
             token: process.env.SQUARE_ACCESS_TOKEN,
-            environment: SquareEnvironment.Sandbox
+            environment: squareEnvironment
         });
 
         const result = await square.checkout.paymentLinks.create({
@@ -158,8 +177,9 @@ app.post("/api/create-checkout", async function (req, res) {
         });
     } catch (error) {
         console.error("Square checkout creation failed.");
+
         res.status(502).json({
-            error: "Unable to create Sandbox checkout. Please try again."
+            error: "Unable to create Square checkout. Please try again."
         });
     }
 });
