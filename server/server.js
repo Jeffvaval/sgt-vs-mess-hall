@@ -164,8 +164,8 @@ app.post("/api/create-checkout", async function (req, res) {
     }
 });
 
-app.listen(PORT, function () {
+app.listen(PORT, "0.0.0.0", function () {
     console.log(
-        `Sgt. V's Mess Hall server running at http://localhost:${PORT}`
+        `Sgt. V's Mess Hall server running on port ${PORT}`
     );
 });
