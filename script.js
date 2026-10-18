@@ -18,6 +18,7 @@
 
 
 
+
 const cookies = [
     {
         id: "puddin-individual",
@@ -28,8 +29,29 @@ const cookies = [
         emoji: "🍌",
         image: "images/puddin-individual.jpg",
         available: true
+    },
+    {
+        id: "berry-individual",
+        name: "Berry on Guard — Individual Cookie",
+        description: "One Berry on Guard cookie.",
+        price: 5.00,
+        stock: 19,
+        emoji: "🍓",
+        image: "images/berry-individual.jpg",
+        available: true
+    },
+    {
+        id: "sergeants-individual",
+        name: "Sergeant's Stash — Individual Cookie",
+        description: "One Sergeant's Stash cookie.",
+        price: 6.00,
+        stock: 16,
+        emoji: "🍪",
+        image: "images/sergeants-stash-individual.jpeg",
+        available: true
     }
 ];
+
 
 const cookieBoxes = [
     {
