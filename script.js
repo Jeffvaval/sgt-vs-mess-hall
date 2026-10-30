@@ -1,28 +1,14 @@
-
 /* ========================================
    SGT. V'S MESS HALL
    Cookie Catalog and Shopping Cart
 ======================================== */
 
-/*
-   BUSINESS SETTINGS
-
-   Update prices and availability here.
-
-   available: false means customers cannot add
-   that product to the cart yet.
-
-   IMPORTANT:
-   Confirm prices and inventory before selling.
-*/
-
-
-
+/* INDIVIDUAL COOKIES */
 
 const cookies = [
     {
         id: "puddin-individual",
-        name: "Puddin' On Duty — Individual Cookie",
+        name: "Puddin' On Duty",
         description: "One Puddin' On Duty cookie.",
         price: 5.00,
         stock: 15,
@@ -32,7 +18,7 @@ const cookies = [
     },
     {
         id: "berry-individual",
-        name: "Berry on Guard — Individual Cookie",
+        name: "Berry on Guard",
         description: "One Berry on Guard cookie.",
         price: 5.00,
         stock: 19,
@@ -42,16 +28,28 @@ const cookies = [
     },
     {
         id: "sergeants-individual",
-        name: "Sergeant's Stash — Individual Cookie",
-        description: "One Sergeant's Stash cookie.",
+        name: "Sgt. Stash",
+        description: "One Sgt. Stash cookie.",
         price: 6.00,
         stock: 16,
         emoji: "🍪",
         image: "images/sergeants-stash-individual.jpeg",
         available: true
+    },
+    {
+        id: "shortcake-individual",
+        name: "Operation Shortcake",
+        description: "One Operation Shortcake cookie.",
+        price: null,
+        stock: 0,
+        emoji: "🍰",
+        image: null,
+        available: false
     }
 ];
 
+
+/* MINI COOKIE BOXES */
 
 const cookieBoxes = [
     {
@@ -60,21 +58,21 @@ const cookieBoxes = [
         quantity: 6,
         description: "Six Berry on Guard mini cookies.",
         price: 13.00,
-        stock: 1,
+        stock: 0,
         emoji: "🍓",
         image: "images/berry-on-guard.jpg",
-        available: true
+        available: false
     },
     {
         id: "mini-6-sergeants",
-        name: "6 Mini Cookies — Sergeant's Stash",
+        name: "6 Mini Cookies — Sgt. Stash",
         quantity: 6,
-        description: "Six Sergeant's Stash mini cookies.",
+        description: "Six Sgt. Stash mini cookies.",
         price: 13.00,
-        stock: 1,
+        stock: 0,
         emoji: "🍪",
         image: "images/sergeants-stash.jpg",
-        available: true
+        available: false
     },
     {
         id: "mini-6-campfire",
@@ -82,10 +80,10 @@ const cookieBoxes = [
         quantity: 6,
         description: "Six Campfire Rations mini cookies.",
         price: 13.00,
-        stock: 2,
+        stock: 0,
         emoji: "🔥",
         image: "images/campfire-rations.jpg",
-        available: true
+        available: false
     },
     {
         id: "mini-4-variety",
@@ -122,9 +120,9 @@ const cookieBoxes = [
     },
     {
         id: "mini-4-sergeants",
-        name: "4 Mini Cookies — Sergeant's Stash",
+        name: "4 Mini Cookies — Sgt. Stash",
         quantity: 4,
-        description: "Four Sergeant's Stash mini cookies.",
+        description: "Four Sgt. Stash mini cookies.",
         price: 6.00,
         stock: 2,
         emoji: "🍪",
@@ -134,24 +132,60 @@ const cookieBoxes = [
 ];
 
 
-/*
-   SHOPPING CART
+/* BATTLE BUDDIES */
 
-   Items are stored in memory while the page is open.
-   A refresh clears the cart in this first version.
-*/
+const battleBuddies = [
+    {
+        id: "battle-puddin",
+        name: "Puddin' On Duty Battle Buddies",
+        description: "Two Puddin' On Duty cookies packed together.",
+        quantity: 2,
+        price: 10.00,
+        stock: 5,
+        emoji: "🍌",
+        image: "images/battle-buddies-puddin.jpg",
+        available: true
+    },
+    {
+        id: "battle-sgt-stash",
+        name: "Sgt. Stash Battle Buddies",
+        description: "Two Sgt. Stash cookies packed together.",
+        quantity: 2,
+        price: 10.00,
+        stock: 7,
+        emoji: "🍪",
+        image: "images/battle-buddies-sgt-stash.jpg",
+        available: true
+    },
+    {
+        id: "battle-shortcake",
+        name: "Operation Shortcake Battle Buddies",
+        description: "Two Operation Shortcake cookies packed together.",
+        quantity: 2,
+        price: 10.00,
+        stock: 3,
+        emoji: "🍰",
+        image: "images/battle-buddies-shortcake.jpg",
+        available: true
+    }
+];
+
+
+/* SHOPPING CART */
 
 const cart = [];
 
-/* Find a product by its ID. */
+
+/* FIND A PRODUCT */
 
 function findProduct(id) {
-    return [...cookies, ...cookieBoxes].find(
+    return [...cookies, ...cookieBoxes, ...battleBuddies].find(
         product => product.id === id
     );
 }
 
-/* Display money in US dollars. */
+
+/* FORMAT PRICES */
 
 function formatPrice(price) {
     return new Intl.NumberFormat("en-US", {
@@ -160,35 +194,49 @@ function formatPrice(price) {
     }).format(price);
 }
 
-/* Create a product card. */
+
+/* CREATE A PRODUCT IMAGE */
+
+function createProductImage(product) {
+    const image = document.createElement("div");
+    image.className = "product-image";
+
+    if (product.image) {
+        const photo = document.createElement("img");
+        photo.src = product.image;
+        photo.alt = product.name;
+
+        photo.onerror = function () {
+            image.textContent = product.emoji;
+        };
+
+        image.appendChild(photo);
+    } else {
+        image.textContent = product.emoji;
+        image.setAttribute("aria-hidden", "true");
+    }
+
+    return image;
+}
+
+
+/* CREATE A REGULAR PRODUCT CARD */
 
 function createProductCard(product, isBox = false) {
     const card = document.createElement("article");
     card.className = "product-card";
 
-    
-const image = document.createElement("div");
-image.className = "product-image";
-
-if (product.image) {
-    const photo = document.createElement("img");
-    photo.src = product.image;
-    photo.alt = product.name;
-    image.appendChild(photo);
-} else {
-    image.textContent = product.emoji;
-    image.setAttribute("aria-hidden", "true");
-}
-
+    const image = createProductImage(product);
 
     const info = document.createElement("div");
     info.className = "product-info";
 
     const status = document.createElement("span");
-    status.className = "availability";
-    status.textContent = product.available
-        ? "Available"
-        : "Currently Unavailable";
+    status.className = product.available
+        ? "availability"
+        : "availability sold-out";
+
+    status.textContent = product.available ? "Available" : "SOLD OUT";
 
     const name = document.createElement("h3");
     name.textContent = product.name;
@@ -196,43 +244,26 @@ if (product.image) {
     const description = document.createElement("p");
     description.textContent = product.description;
 
-    const details = document.createElement("p");
-
-    if (isBox) {
-        details.textContent = `${product.quantity}-cookie preset box`;
-    }
-
     const price = document.createElement("p");
     price.className = "product-price";
-    price.textContent = product.price === null
-        ? "Price to be confirmed"
-        : formatPrice(product.price);
+    price.textContent = formatPrice(product.price);
 
     const button = document.createElement("button");
     button.className = "product-button";
     button.type = "button";
+    button.textContent = product.available ? "Add to Cart" : "SOLD OUT";
+    button.disabled = !product.available;
 
-    button.textContent = product.available
-        ? "Add to Cart"
-        : "Unavailable";
+    button.addEventListener("click", function () {
+        addToCart(product.id);
+    });
 
-    button.disabled =
-        !product.available || product.price === null;
-
-    
-button.addEventListener("click", function () {
-    addToCart(product.id);
-});
-
-
-    info.append(
-        status,
-        name,
-        description
-    );
+    info.append(status, name, description);
 
     if (isBox) {
-        info.append(details);
+        const details = document.createElement("p");
+        details.textContent = `${product.quantity} cookies per box`;
+        info.appendChild(details);
     }
 
     info.append(price, button);
@@ -241,21 +272,107 @@ button.addEventListener("click", function () {
     return card;
 }
 
-/* Display all cookie products. */
+
+/* DISPLAY INDIVIDUAL COOKIES WITH A DROPDOWN */
 
 function displayCookies() {
     const cookieList = document.getElementById("cookie-list");
 
     cookieList.replaceChildren();
 
+    const card = document.createElement("article");
+    card.className = "product-card";
+
+    const image = createProductImage(cookies[0]);
+
+    const info = document.createElement("div");
+    info.className = "product-info";
+
+    const status = document.createElement("span");
+    status.className = "availability";
+
+    const name = document.createElement("h3");
+    name.textContent = "Individual Cookies";
+
+    const description = document.createElement("p");
+    description.textContent = "Choose your favorite cookie flavor.";
+
+    const label = document.createElement("label");
+    label.textContent = "Select a flavor:";
+
+    const select = document.createElement("select");
+    select.className = "product-select";
+    select.setAttribute("aria-label", "Choose an individual cookie flavor");
+
     cookies.forEach(function (cookie) {
-        cookieList.appendChild(
-            createProductCard(cookie)
-        );
+        const option = document.createElement("option");
+        option.value = cookie.id;
+        option.textContent = cookie.available
+            ? cookie.name
+            : `${cookie.name} — SOLD OUT`;
+
+        select.appendChild(option);
     });
+
+    const price = document.createElement("p");
+    price.className = "product-price";
+
+    const button = document.createElement("button");
+    button.className = "product-button";
+    button.type = "button";
+
+    function updateIndividualCookie() {
+    const selectedCookie = findProduct(select.value);
+
+    const currentImage = card.querySelector(".product-image");
+
+    if (currentImage) {
+        currentImage.replaceWith(createProductImage(selectedCookie));
+    }
+
+    status.textContent = selectedCookie.available
+        ? "Available"
+        : "SOLD OUT";
+
+    status.className = selectedCookie.available
+        ? "availability"
+        : "availability sold-out";
+
+    price.textContent = selectedCookie.price === null
+        ? "Price to be confirmed"
+        : formatPrice(selectedCookie.price);
+
+    button.textContent = selectedCookie.available
+        ? "Add to Cart"
+        : "SOLD OUT";
+
+    button.disabled = !selectedCookie.available;
 }
 
-/* Display the three preset cookie boxes. */
+    select.addEventListener("change", updateIndividualCookie);
+
+    button.addEventListener("click", function () {
+        addToCart(select.value);
+    });
+
+    info.append(
+        status,
+        name,
+        description,
+        label,
+        select,
+        price,
+        button
+    );
+
+    card.append(image, info);
+    cookieList.appendChild(card);
+
+    updateIndividualCookie();
+}
+
+
+/* DISPLAY MINI COOKIE BOXES */
 
 function displayCookieBoxes() {
     const boxList = document.getElementById("box-list");
@@ -263,23 +380,30 @@ function displayCookieBoxes() {
     boxList.replaceChildren();
 
     cookieBoxes.forEach(function (box) {
-        boxList.appendChild(
-            createProductCard(box, true)
-        );
+        boxList.appendChild(createProductCard(box, true));
     });
 }
 
-/* Add a product to the cart. */
 
+/* DISPLAY BATTLE BUDDIES */
+
+function displayBattleBuddies() {
+    const battleList = document.getElementById("battle-list");
+
+    battleList.replaceChildren();
+
+    battleBuddies.forEach(function (box) {
+        battleList.appendChild(createProductCard(box, true));
+    });
+}
+
+
+/* ADD A PRODUCT TO THE CART */
 
 function addToCart(productId) {
     const product = findProduct(productId);
 
-    if (
-        !product ||
-        !product.available ||
-        product.price === null
-    ) {
+    if (!product || !product.available || product.price === null) {
         return;
     }
 
@@ -291,10 +415,7 @@ function addToCart(productId) {
         ? existingItem.quantity
         : 0;
 
-    if (
-        product.stock !== undefined &&
-        currentQuantity >= product.stock
-    ) {
+    if (currentQuantity >= product.stock) {
         alert("Sorry, we don't have any more of this item in stock.");
         return;
     }
@@ -310,12 +431,11 @@ function addToCart(productId) {
 
     displayCart();
 
-    const cartPanel = document.getElementById("cart-panel");
-    cartPanel.hidden = false;
+    document.getElementById("cart-panel").hidden = false;
 }
 
 
-/* Change the quantity of an item in the cart. */
+/* CHANGE CART QUANTITY */
 
 function changeQuantity(productId, change) {
     const item = cart.find(
@@ -323,6 +443,11 @@ function changeQuantity(productId, change) {
     );
 
     if (!item) {
+        return;
+    }
+
+    if (change > 0) {
+        addToCart(productId);
         return;
     }
 
@@ -339,7 +464,8 @@ function changeQuantity(productId, change) {
     displayCart();
 }
 
-/* Display cart items and calculate the total. */
+
+/* DISPLAY CART ITEMS AND TOTAL */
 
 function displayCart() {
     const cartItems = document.getElementById("cart-items");
@@ -406,12 +532,7 @@ function displayCart() {
             addToCart(product.id);
         });
 
-        controls.append(
-            minusButton,
-            quantity,
-            plusButton
-        );
-
+        controls.append(minusButton, quantity, plusButton);
         row.append(details, controls);
         cartItems.appendChild(row);
     });
@@ -429,7 +550,7 @@ function displayCart() {
 }
 
 
-/* Connect the shopping cart buttons. */
+/* CONNECT SHOPPING CART BUTTONS */
 
 function setupCartButtons() {
     const cartButton = document.getElementById("cart-button");
@@ -491,26 +612,30 @@ function setupCartButtons() {
             window.location.href = result.checkoutUrl;
         } catch (error) {
             console.error("Checkout error:", error);
+
             checkoutMessage.textContent =
                 "Checkout could not be started. Please try again.";
+
             checkoutButton.disabled = false;
         }
     });
 }
 
 
-/* Set the current year in the footer. */
+/* DISPLAY CURRENT YEAR */
 
 function displayCurrentYear() {
     document.getElementById("current-year").textContent =
         new Date().getFullYear();
 }
 
-/* Start the website. */
+
+/* START WEBSITE */
 
 function initializeWebsite() {
     displayCookies();
     displayCookieBoxes();
+    displayBattleBuddies();
     displayCart();
     setupCartButtons();
     displayCurrentYear();

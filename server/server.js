@@ -24,7 +24,6 @@ app.use(express.static(path.join(__dirname, "..")));
 
 // Server-controlled catalog.
 const products = {
-
     "puddin-individual": {
         name: "Puddin' On Duty — Individual Cookie",
         price: 500,
@@ -36,7 +35,7 @@ const products = {
         stock: 19
     },
     "sergeants-individual": {
-        name: "Sergeant's Stash — Individual Cookie",
+        name: "Sgt. Stash — Individual Cookie",
         price: 600,
         stock: 16
     },
@@ -44,18 +43,19 @@ const products = {
     "mini-6-berry": {
         name: "6 Mini Cookies — Berry on Guard",
         price: 1300,
-        stock: 1
+        stock: 0
     },
     "mini-6-sergeants": {
-        name: "6 Mini Cookies — Sergeant's Stash",
+        name: "6 Mini Cookies — Sgt. Stash",
         price: 1300,
-        stock: 1
+        stock: 0
     },
     "mini-6-campfire": {
         name: "6 Mini Cookies — Campfire Rations",
         price: 1300,
-        stock: 2
+        stock: 0
     },
+
     "mini-4-variety": {
         name: "4 Mini Cookies — Variety Pack",
         price: 600,
@@ -72,9 +72,25 @@ const products = {
         stock: 2
     },
     "mini-4-sergeants": {
-        name: "4 Mini Cookies — Sergeant's Stash",
+        name: "4 Mini Cookies — Sgt. Stash",
         price: 600,
         stock: 2
+    },
+
+    "battle-puddin": {
+        name: "Puddin' On Duty Battle Buddies — 2 Cookies",
+        price: 1000,
+        stock: 5
+    },
+    "battle-sgt-stash": {
+        name: "Sgt. Stash Battle Buddies — 2 Cookies",
+        price: 1000,
+        stock: 7
+    },
+    "battle-shortcake": {
+        name: "Operation Shortcake Battle Buddies — 2 Cookies",
+        price: 1000,
+        stock: 3
     }
 };
 
