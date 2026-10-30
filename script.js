@@ -91,11 +91,22 @@ const cookieBoxes = [
         quantity: 4,
         description: "A variety pack of four mini cookies.",
         price: 6.00,
-        stock: 28,
+        stock: 9,
         emoji: "🎁",
         image: "images/4-mini-cookie-pack.jpg",
         available: true
     },
+    {
+    id: "mini-3-variety",
+    name: "3 Mini Cookies — Variety Pack",
+    quantity: 3,
+    description: "A variety pack of three mini cookies.",
+    price: 4.00,
+    stock: 17,
+    emoji: "🎁",
+    image: "images/4-mini-cookie-pack.jpg",
+    available: true
+},
     {
         id: "mini-4-puddin",
         name: "4 Mini Cookies — Puddin' On Duty",
@@ -373,14 +384,102 @@ function displayCookies() {
 
 
 /* DISPLAY MINI COOKIE BOXES */
+function createVarietyPackCard() {
+    const card = document.createElement("article");
+    card.className = "product-card";
 
+    const image = createProductImage(
+        findProduct("mini-4-variety")
+    );
+
+    const info = document.createElement("div");
+    info.className = "product-info";
+
+    const status = document.createElement("span");
+    status.className = "availability";
+    status.textContent = "Available";
+
+    const name = document.createElement("h3");
+    name.textContent = "Variety Pack";
+
+    const description = document.createElement("p");
+    description.textContent = "Choose your pack size.";
+
+    const label = document.createElement("label");
+    label.textContent = "Select pack size:";
+
+    const select = document.createElement("select");
+    select.className = "product-select";
+
+    const fourPack = document.createElement("option");
+    fourPack.value = "mini-4-variety";
+    fourPack.textContent = "4 Mini Cookies — $6.00";
+
+    const threePack = document.createElement("option");
+    threePack.value = "mini-3-variety";
+    threePack.textContent = "3 Mini Cookies — $4.00";
+
+    select.append(fourPack, threePack);
+
+    const price = document.createElement("p");
+    price.className = "product-price";
+
+    const button = document.createElement("button");
+    button.className = "product-button";
+    button.type = "button";
+    button.textContent = "Add to Cart";
+
+    function updatePack() {
+        const product = findProduct(select.value);
+
+        price.textContent = formatPrice(product.price);
+        status.textContent = product.available ? "Available" : "SOLD OUT";
+        status.className = product.available
+            ? "availability"
+            : "availability sold-out";
+
+        button.disabled = !product.available;
+        button.textContent = product.available
+            ? "Add to Cart"
+            : "SOLD OUT";
+    }
+
+    select.addEventListener("change", updatePack);
+
+    button.addEventListener("click", function () {
+        addToCart(select.value);
+    });
+
+    info.append(
+        status,
+        name,
+        description,
+        label,
+        select,
+        price,
+        button
+    );
+
+    card.append(image, info);
+
+    updatePack();
+
+    return card;
+}
 function displayCookieBoxes() {
     const boxList = document.getElementById("box-list");
 
     boxList.replaceChildren();
 
+    boxList.appendChild(createVarietyPackCard());
+
     cookieBoxes.forEach(function (box) {
-        boxList.appendChild(createProductCard(box, true));
+        if (
+            box.id !== "mini-4-variety" &&
+            box.id !== "mini-3-variety"
+        ) {
+            boxList.appendChild(createProductCard(box, true));
+        }
     });
 }
 
